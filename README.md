@@ -2,6 +2,16 @@
 
 A desktop application that gives you instant access to Kreo Control (https://kontrol.kreo-tech.com/initialize) without needing to open a browser. Built with Electron for seamless integration.
 
+## ⚠️ Important - Read Before Using
+
+### 📱 Device Selection
+The app automatically selects the **top device in your list as the default device**. Make sure your preferred device is the only connected device.
+
+### 🔐 Sign In & Authentication  
+- **Required:** Create an account on Kreo before using the app
+- Use your Kreo account credentials to sign in
+- **Google Sign-In:** Opens an in-app browser window (not your system browser). You can use your regular Kreo account for a simpler experience instead.
+
 ## Features
 
 🖥️ **Desktop Application**
@@ -49,16 +59,6 @@ A desktop application that gives you instant access to Kreo Control (https://kon
    - Windows (.exe installer)
    - macOS (.dmg)
    - Linux (.AppImage)
-
-## Important Notes
-
-### Device Selection
-The app automatically selects the **top device in your list as the default device**. Make sure your preferred device is positioned accordingly in your Kreo Control settings.
-
-### Sign In & Authentication
-- **Create an account** on Kreo before using the app
-- Use your Kreo account credentials to sign in
-- **Google Sign-In:** When using Google authentication, the sign-in page will open in an in-app browser window (not your system browser). While this feature is available, you can choose to use your regular Kreo account for a simpler experience.
 
 ## Technologies Used
 
