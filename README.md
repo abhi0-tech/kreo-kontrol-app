@@ -50,6 +50,16 @@ A desktop application that gives you instant access to Kreo Control (https://kon
    - macOS (.dmg)
    - Linux (.AppImage)
 
+## Important Notes
+
+### Device Selection
+The app automatically selects the **top device in your list as the default device**. Make sure your preferred device is positioned accordingly in your Kreo Control settings.
+
+### Sign In & Authentication
+- **Create an account** on Kreo before using the app
+- Use your Kreo account credentials to sign in
+- **Google Sign-In:** When using Google authentication, the sign-in page will open in an in-app browser window (not your system browser). While this feature is available, you can choose to use your regular Kreo account for a simpler experience.
+
 ## Technologies Used
 
 - **Electron** - Desktop application framework
