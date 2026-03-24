@@ -2,6 +2,8 @@ const { app, BrowserWindow, Menu, ipcMain, session } = require('electron')
 const path = require('path')
 
 let mainWindow
+let defaultDeviceId = null
+let defaultDeviceName = null
 
 // Enable GPU - Electron 31 has better GPU compatibility
 // app.disableHardwareAcceleration()
@@ -33,12 +35,37 @@ function createWindow() {
     // mainWindow.webContents.openDevTools()
   })
 
-  // Enable WebHID device access
+  // Enable WebHID device access - auto-select if default device is stored
   mainWindow.webContents.session.on('select-hid-device', (event, details, callback) => {
-    console.log('[WebHID] Device selection requested, auto-selecting first device')
-    if (details.deviceList && details.deviceList.length > 0) {
-      callback(details.deviceList[0].deviceId)
+    console.log('[WebHID] Device selection requested by app')
+    console.log('[WebHID] Available devices:', details.deviceList.map(d => ({ 
+      name: d.productName || 'Unknown', 
+      id: d.deviceId,
+      vendorId: '0x' + d.vendorId.toString(16),
+      productId: '0x' + d.productId.toString(16)
+    })))
+    
+    if (!details.deviceList || details.deviceList.length === 0) {
+      console.log('[WebHID] No devices available')
+      return
     }
+
+    // If a default device is set, try to use it
+    if (defaultDeviceId) {
+      const defaultDevice = details.deviceList.find(d => d.deviceId === defaultDeviceId)
+      if (defaultDevice) {
+        console.log(`[WebHID] ✓ Auto-connecting to default device: ${defaultDevice.productName || 'Unknown'}`)
+        callback(defaultDevice.deviceId)
+        return
+      } else {
+        console.log(`[WebHID] Default device not found in current list, using first available`)
+      }
+    }
+
+    // Otherwise use first available device
+    const firstDevice = details.deviceList[0]
+    console.log(`[WebHID] Connecting to first device: ${firstDevice.productName || 'Unknown'}`)
+    callback(firstDevice.deviceId)
   })
 
   mainWindow.webContents.on('did-finish-load', () => {
@@ -52,7 +79,42 @@ function createWindow() {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  // Register keyboard shortcuts for DevTools and Reload
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    // F12 or Ctrl+Shift+I for DevTools
+    if ((input.key.toLowerCase() === 'f12') ||
+        (input.control && input.shift && input.key.toLowerCase() === 'i')) {
+      mainWindow.webContents.toggleDevTools()
+      event.preventDefault()
+    }
+    
+    // Ctrl+R or Ctrl+Shift+R for reload
+    if (input.control && (input.key.toLowerCase() === 'r')) {
+      mainWindow.webContents.reload()
+      event.preventDefault()
+    }
+  })
 }
+
+// IPC handlers for WebHID device management
+ipcMain.handle('webhid:setDefaultDevice', (event, deviceId, deviceName) => {
+  console.log('[WebHID] Setting default device:', deviceId, deviceName)
+  defaultDeviceId = deviceId
+  defaultDeviceName = deviceName
+  return true
+})
+
+ipcMain.handle('webhid:getDefaultDevice', () => {
+  return { id: defaultDeviceId, name: defaultDeviceName }
+})
+
+ipcMain.handle('webhid:clearDefaultDevice', () => {
+  console.log('[WebHID] Clearing default device')
+  defaultDeviceId = null
+  defaultDeviceName = null
+  return true
+})
 
 // Clear all site data and create window on startup
 app.on('ready', async () => {

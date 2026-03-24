@@ -5,7 +5,7 @@ A desktop application that gives you instant access to Kreo Control (https://kon
 ## ⚠️ Important - Read Before Using
 
 ### 📱 Device Selection
-The app automatically selects the **top device in your list as the default device**. Make sure your preferred device is the only connected device.
+The app automatically selects the **top device in your list as the default device**. Make sure your preferred device is the only connected devicex.
 
 ### 🔐 Sign In & Authentication  
 - **Required:** Create an account on Kreo before using the app
