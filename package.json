@@ -1,6 +1,8 @@
 {
   "name": "kreo-offline-app",
   "version": "1.0.0",
+  "description": "Kreo Offline Control Application",
+  "author": "Your Name <your.email@example.com>",
   "main": "electron/main.js",
   "homepage": "./",
   "scripts": {
@@ -35,7 +37,8 @@
       "dist/**/*",
       "electron/**/*",
       "node_modules/**/*",
-      "icon.ico"
+      "icon.ico",
+      "icon.png"
     ],
     "directories": {
       "buildResources": "assets"
@@ -63,6 +66,38 @@
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
       "shortcutName": "Kreo Control"
+    },
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
+      "icon": "icon.png",
+      "category": "public.app-category.utilities",
+      "artifactName": "${productName}-${version}.${ext}"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150,
+          "type": "file"
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "deb"
+      ],
+      "icon": "icon.png",
+      "category": "Utility"
     }
   }
 }
