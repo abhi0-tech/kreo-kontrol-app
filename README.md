@@ -1,6 +1,11 @@
 # Kreo Offline App
 
-A desktop application that gives you instant access to Kreo Control (https://kontrol.kreo-tech.com/initialize) without needing to open a browser. Built with Electron for seamless integration.
+A desktop application that gives you instant access to [Kreo Control](https://kontrol.kreo-tech.com/initialize) without needing to open a browser. Built with Electron for seamless integration.
+
+# screenshot
+
+<img width="1919" height="1079" alt="image" src="https://github.com/user-attachments/assets/a90c3192-e513-43b2-a1cd-c5bf5eff4697" />
+
 
 ## ⚠️ Important - Read Before Using
 
