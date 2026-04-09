@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "concurrently \"npm run react-dev\" \"wait-on http://localhost:3000 && electron .\"",
     "react-dev": "vite",
-    "build": "vite build && electron-builder",
+    "build": "vite build && electron-builder --publish never",
     "electron": "electron .",
     "start": "electron ."
   },
